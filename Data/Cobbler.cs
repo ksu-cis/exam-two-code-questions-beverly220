@@ -1,19 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ExamTwoCodeQuestions.Data
 {
-    public class Cobbler : IOrderItem
-    {
+    public class Cobbler : IOrderItem, INotifyPropertyChanged {
+
+        /// <summary>
+        /// Creates an event when a property is changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// stores fruit value
+        /// </summary>
+        FruitFilling fruit = FruitFilling.Blueberry;
+
         /// <summary>
         /// The fruit used in the cobbler
         /// </summary>
-        public FruitFilling Fruit { get; set; }
+        public FruitFilling Fruit {
+            get {
+                return fruit;
+            }
+            set {
+                fruit = value;
+                NotifyOfPropertyChanged("Fruit");
+            }
+        }
+
+        /// <summary>
+        /// stores that cream is default
+        /// </summary>
+        bool cream = true;
 
         /// <summary>
         /// If the cobbler is served with ice cream
         /// </summary>
-        public bool WithIceCream { get; set; } = true;
+        public bool WithIceCream {
+            get {
+                return cream;
+            }
+            set {
+                cream = value;
+                NotifyOfPropertyChanged("WithIceCream");
+            }
+        }
 
         /// <summary>
         /// Gets the price of the Cobbler
@@ -25,6 +57,14 @@ namespace ExamTwoCodeQuestions.Data
                 if (WithIceCream) return 5.32;
                 else return 4.25;
             }
+        }
+
+        /// <summary>
+        /// Updates if a Property is Changed
+        /// </summary>
+        /// <param name="name">the entree changed</param>
+        protected void NotifyOfPropertyChanged(string name) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         /// <summary>

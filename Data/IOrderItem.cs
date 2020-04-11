@@ -15,5 +15,6 @@ namespace ExamTwoCodeQuestions.Data
         /// Gets the list of special instructions for the current item
         /// </summary>
         List<string> SpecialInstructions { get; }
+
     }
 }
